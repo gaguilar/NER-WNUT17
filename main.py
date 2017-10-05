@@ -89,7 +89,7 @@ def main():
     x_train_samples = train_gaze_values + train_char_values + train_word_values
     y_train_samples = {'bin_output': y_bin_train, 'cat_output': y_cat_train}
 
-    network.train_multitask_net_with_split(mtl_network, x_train_samples, y_train_samples, epochs=20)
+    network.train_multitask_net_with_split(mtl_network, x_train_samples, y_train_samples)
 
 
     ###############################
