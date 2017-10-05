@@ -17,9 +17,11 @@ def main():
     ###############################
 
     ## TWEETS
+    print("Loading tweets...")
     (tweets_train, labels_train), (tweets_test, labels_test) = utils.read_datasets()
 
     ## POS TAGS
+    print("Loading pos tags...")
     postag_train, postag_test = utils.read_and_sync_postags(tweets_train, tweets_test)
 
 
@@ -28,9 +30,11 @@ def main():
     ###############################
 
     ## TWITTER
+    print("Loading twitter embeddings...")
     twitter_embeddings, word2index = utils.read_twitter_embeddings(tweets_train + tweets_test)
 
     ## GAZETTERS
+    print("Loading gazetteers embeddings...")
     gaze_embeddings, gaze2index = utils.read_gazetteer_embeddings()
 
 
@@ -38,6 +42,7 @@ def main():
     ## GENERATING ENCODING
     ###############################
 
+    print("Generating encodings...")
     ## WORDS (X)
     radius = 1
     x_word_twitter_train = rep.encode_tweets(word2index, tweets_train, radius)
@@ -67,6 +72,7 @@ def main():
     ## BUILD NEURAL NETWORK
     ###############################
 
+    print("Building neural network...")
     char_inputs, char_encoded = network.get_char_cnn(ortho_max_length, len(rep.index2ortho), ortho_dim, 'char_ortho')
     word_inputs, word_encoded = network.get_word_blstm(len(index2postag), twitter_embeddings, window=radius*2+1, word_dim=100)
     gaze_inputs, gaze_encoded = network.get_gazetteers_dense(radius*2+1, gaze_embeddings)
@@ -133,6 +139,7 @@ def main():
 
 
 if __name__ == '__main__':
+    # print("running on the server?")
     main()
 
 

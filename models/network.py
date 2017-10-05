@@ -1,8 +1,5 @@
-import numpy as np
-seed_number = 1337
-np.random.seed(seed_number)
-
 from common import utilities as utils
+
 from keras.callbacks import EarlyStopping
 from keras.callbacks import ModelCheckpoint
 from keras.initializers import RandomUniform
@@ -19,6 +16,9 @@ from keras.layers.pooling import GlobalAveragePooling1D
 from keras.models import Model
 from keras.optimizers import Adamax
 
+import numpy as np
+seed_number = 1337
+np.random.seed(seed_number)  # for reproducibility
 
 
 ################################################################################
@@ -193,7 +193,7 @@ def train_multitask_net(mtl_model,
                         epochs=150,
                         batch_size=500,
                         verbose=True):
-    early_stopping = EarlyStopping(patience=20, verbose=1)
+    early_stopping = EarlyStopping(patience=10, verbose=1)
     hist = mtl_model.fit(x_train,
                          y_train,
                          batch_size=batch_size,
@@ -211,7 +211,7 @@ def train_multitask_net_with_split(mtl_model,
                                    batch_size=500,
                                    valid_split=0.2,
                                    verbose=True):
-    early_stopping = EarlyStopping(patience=10, verbose=1)
+    early_stopping = EarlyStopping(patience=20, verbose=1)
     hist = mtl_model.fit(x_train,
                          y_train,
                          batch_size=batch_size,
